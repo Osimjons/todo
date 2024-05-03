@@ -1,0 +1,276 @@
+$danger: #E25858;
+
+$gray-100: #F2F2F2;
+$gray-200: #D9D9D9;
+$gray-300: #808080;
+$gray-400: #333;
+$gray-500: #262626;
+$gray-600: #1A1A1A;
+$gray-700: #0D0D0D;
+
+$purple: #5E60CE;
+$purple-hover: #8284FA;
+$blue: #1e709f;
+$blue-hover: #4EA8DE;
+
+$border-radius: 8px;
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 140%;
+  text-decoration: none;
+}
+
+html,
+body {
+  font-family: Inter, sans-serif;
+  min-height: 100vh;
+  transition: all 0.03s ease;
+  scroll-behavior: smooth;
+
+}
+
+.wrapper {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 220px 1fr;
+  grid-template-areas:
+    "header"
+    "main"
+  ;
+}
+
+.container {
+  margin-inline: auto;
+  padding-inline: 15px;
+  max-width: 770px;
+}
+
+.header {
+  background-color: $gray-700;
+  display: flex;
+  grid-area: header;
+
+  // .header__logo
+  &__logo {
+    margin-inline: auto;
+    padding-block: 80px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    // .header__logo-img
+    &-img {
+      width: 22px;
+      height: 36px;
+    }
+
+    // .header__logo-title
+    &-title {
+      font-weight: 900;
+      font-size: 40px;
+      color: $blue;
+
+      & * {
+        color: $purple;
+      }
+    }
+  }
+}
+
+
+
+
+.main {
+  // flex: 1 1 100%;
+  grid-area: main;
+
+  background-color: $gray-500;
+
+  .form {
+    display: flex;
+    gap: 8px;
+    transform: translateY(-50%);
+    margin-bottom: 30px;
+
+    // .form__input
+    &__input {
+      flex: 1 1 638px;
+      height: 54px;
+      border-radius: $border-radius;
+      background: $gray-500;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 140%;
+      padding-inline: 10px;
+      border: 1px solid $gray-700;
+      color: $gray-100;
+
+      &::placeholder {
+        color: $gray-300;
+      }
+    }
+
+    // .form__btn
+    &__btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: $border-radius;
+      padding: 16px;
+      text-align: center;
+      border: none;
+      background-color: $blue;
+      opacity: 1;
+      font-weight: 700;
+      font-size: 14px;
+      color: $gray-100;
+      cursor: pointer;
+
+      &::after {
+        content: "+";
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        
+        width: 17px;
+        height: 17px;
+        border-radius: 50%;
+        border: 1px solid $gray-100;
+        text-align: center;
+      }
+
+      &:hover {
+        background-color: $blue-hover;
+      }
+
+      &:active {
+        opacity: 0.8;
+      }
+
+
+    }
+  }
+}
+
+
+
+.todo-counts {
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  // .todo-counts__all
+  &__all {}
+
+  // .todo-counts__created-tasks
+  &__created-tasks {
+    font-weight: 700;
+    font-size: 14px;
+    color: $blue;
+  }
+
+  // .todo-counts__completed
+  &__created-count {
+    width: 25px;
+    height: 19px;
+    padding: 2px 8px;
+    background: $gray-400;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12px;
+    color: $gray-200;
+  }
+
+  // .todo-counts__complet
+  &__complet {
+    font-weight: 700;
+    font-size: 14px;
+    color: $purple;
+  }
+}
+
+.hr {
+  height: 10px;
+  border-top: 1.5px solid $gray-300;
+  border-top-left-radius: $border-radius;
+  border-top-right-radius: $border-radius;
+}
+
+.tasks {
+  padding-block: 65px;
+
+  .task {
+    display: flex;
+    flex-direction: column;
+
+    // .task__no-task
+    &__no-task {
+      &.active {
+        display: flex;
+      }
+
+      // .task__no-task-desc
+      &-desc {}
+
+      & .note-svg {
+        width: 56px;
+        aspect-ratio: 1;
+        fill: #323ff2;
+      }
+    }
+
+    // .task__list
+    &__list {}
+
+    // .task__item
+    &__item {
+      &:not(:last-child) {
+        margin-bottom: 12px;
+      }
+    }
+  }
+}
+
+
+
+
+
+.item {
+
+  // .item__block
+  &__block {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: start;
+    gap: 12px;
+  }
+
+  &__checkbox {
+    transform: translateY(50%);
+  }
+
+  // .item__text
+  &__text {
+    font-size: 14px;
+    line-height: 140%;
+    color: $gray-100;
+  }
+
+  &__cart {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    padding: 8px;
+    fill: $gray-300;
+
+    &:hover {
+      fill: $danger;
+      cursor: pointer;
+    }
+  }
+}
