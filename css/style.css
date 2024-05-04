@@ -225,6 +225,9 @@ body {
 }
 
 .item__block {
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -234,6 +237,9 @@ body {
       -ms-flex-align: start;
           align-items: start;
   gap: 12px;
+  -webkit-box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+          box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
+  background: #262626;
 }
 .item__checkbox {
   -webkit-transform: translateY(50%);
@@ -256,9 +262,11 @@ body {
   padding: 8px;
   fill: #808080;
 }
-.item__cart:hover {
-  fill: #E25858;
-  cursor: pointer;
+@media (hover: hover) {
+  .item__cart:hover {
+    fill: #E25858;
+    cursor: pointer;
+  }
 }
 .item__cart:active {
   fill: #d62c2c;
