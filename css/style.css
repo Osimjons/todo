@@ -7,6 +7,11 @@
   text-decoration: none;
 }
 
+ul,
+li {
+  list-style-type: none;
+}
+
 html,
 body {
   font-family: Inter, sans-serif;
@@ -103,6 +108,9 @@ body {
 .main .form__input::placeholder {
   color: #808080;
 }
+.main .form__input:focus-visible {
+  outline: 1px solid #5E60CE;
+}
 .main .form__btn {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -121,23 +129,6 @@ body {
   font-size: 14px;
   color: #F2F2F2;
   cursor: pointer;
-}
-.main .form__btn::after {
-  content: "+";
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 17px;
-  height: 17px;
-  border-radius: 50%;
-  border: 1px solid #F2F2F2;
-  text-align: center;
 }
 .main .form__btn:hover {
   background-color: #4EA8DE;
@@ -198,15 +189,36 @@ body {
       -ms-flex-direction: column;
           flex-direction: column;
 }
+.tasks .task__no-task {
+  display: none;
+}
 .tasks .task__no-task.active {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 16px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 140%;
+  text-align: center;
+  color: #808080;
 }
 .tasks .task__no-task .note-svg {
   width: 56px;
   aspect-ratio: 1;
-  fill: #323ff2;
+  fill: #1A1A1A;
+  stroke: #D9D9D9;
+  stroke-width: 5px;
+}
+.tasks .task__no-task .note-svg:hover {
+  stroke: #F2F2F2;
 }
 .tasks .task__item:not(:last-child) {
   margin-bottom: 12px;
@@ -230,8 +242,11 @@ body {
 }
 .item__text {
   font-size: 14px;
-  line-height: 140%;
   color: #F2F2F2;
+}
+.item__text.done {
+  text-decoration: line-through;
+  color: #808080;
 }
 .item__cart {
   -ms-flex-negative: 0;
@@ -244,4 +259,13 @@ body {
 .item__cart:hover {
   fill: #E25858;
   cursor: pointer;
+}
+.item__cart:active {
+  fill: #d62c2c;
+}
+
+.plus {
+  width: 16px;
+  height: 16px;
+  fill: #F2F2F2;
 }

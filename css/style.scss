@@ -1,4 +1,5 @@
 $danger: #E25858;
+$danger-active: #d62c2c;
 
 $gray-100: #F2F2F2;
 $gray-200: #D9D9D9;
@@ -22,6 +23,11 @@ $border-radius: 8px;
   box-sizing: border-box;
   line-height: 140%;
   text-decoration: none;
+}
+
+ul,
+li {
+  list-style-type: none;
 }
 
 html,
@@ -112,6 +118,10 @@ body {
       &::placeholder {
         color: $gray-300;
       }
+
+      &:focus-visible {
+        outline: 1px solid $purple;
+      }
     }
 
     // .form__btn
@@ -130,18 +140,6 @@ body {
       color: $gray-100;
       cursor: pointer;
 
-      &::after {
-        content: "+";
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        
-        width: 17px;
-        height: 17px;
-        border-radius: 50%;
-        border: 1px solid $gray-100;
-        text-align: center;
-      }
 
       &:hover {
         background-color: $blue-hover;
@@ -210,8 +208,19 @@ body {
 
     // .task__no-task
     &__no-task {
+      display: none;
+
       &.active {
-        display: flex;
+        display: flex; ///////////////////////////////Добавить класс
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 140%;
+        text-align: center;
+        color: $gray-300;
+
       }
 
       // .task__no-task-desc
@@ -220,7 +229,13 @@ body {
       & .note-svg {
         width: 56px;
         aspect-ratio: 1;
-        fill: #323ff2;
+        fill: $gray-600;
+        stroke: $gray-200;
+        stroke-width: 5px;
+
+        &:hover {
+          stroke: $gray-100;
+        }
       }
     }
 
@@ -257,8 +272,13 @@ body {
   // .item__text
   &__text {
     font-size: 14px;
-    line-height: 140%;
     color: $gray-100;
+
+    &.done {
+      ////////////////////////////////////////////////Добавить класс 
+      text-decoration: line-through;
+      color: $gray-300;
+    }
   }
 
   &__cart {
@@ -272,5 +292,15 @@ body {
       fill: $danger;
       cursor: pointer;
     }
+
+    &:active {
+      fill: $danger-active
+    }
   }
+}
+
+.plus {
+  width: 16px;
+  height: 16px;
+  fill: $gray-100;
 }
