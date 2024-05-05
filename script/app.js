@@ -13,20 +13,9 @@ const allTasks = getElmByHtml('.todo-counts__created-count');
 const completTasks = getElmByHtml('.todo-counts__completed');
 let text = getElmByHtml('.task__list');
 const noTaskDislay = getElmByHtml('.task__no-task');
-const doneTasks =
-  getElmByHtml(
-    '.item__text'
-  ); /**Переменная для зачеркивания задачи как завешенная */
+const doneTasks = getElmByHtml('.item__text'); //Переменная для зачеркивания задачи как завешенная
 const checkbox = getElmByHtml('.item__checkbox');
 // console.log('checkbox: ', checkbox);
-
-// checkbox.addEventListener('click', (event) => {
-//   // if (event.target.checked) {
-//   //   doneTasks.classList.add('done');
-//   // } else {
-//   //   doneTasks.classList.remove('done');
-//   // }
-// });
 
 noTaskDislay.classList.add('active');
 
@@ -41,6 +30,8 @@ form.addEventListener('submit', (event) => {
 const task = [];
 
 const createTask = (value) => {
+  value = value.trim();
+  // value = value.split('').charAt(0).toUpperCase() + value.slice(1);
   if (value === '') return;
   task.push(value);
   return task;
@@ -64,3 +55,16 @@ const outOnDisplay = (taskArr) => {
     })
     .join('');
 };
+
+task.forEach((task) => {
+  if (checkbox.checked === true) {
+    doneTasks.classList.add('done');
+  }
+});
+
+// document.querySelectorAll('.item__checkbox').forEach((checkbox, index) => {
+//   checkbox.addEventListener('change', () => {
+//     const textEl = text.querySelectorAll('.item__text')[index];
+//     textEl.classList.toggle('done', checkbox.checked);
+//   });
+// });

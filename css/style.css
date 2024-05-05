@@ -58,7 +58,7 @@ body {
 }
 .header__logo-title {
   font-weight: 900;
-  font-size: clamp(25px, 4vw, 40px);
+  font-size: clamp(30px, 7vw, 40px);
   color: #1e709f;
 }
 .header__logo-title * {
@@ -67,6 +67,7 @@ body {
 }
 
 .main {
+  padding-bottom: 50px;
   grid-area: main;
   background-color: #262626;
 }
