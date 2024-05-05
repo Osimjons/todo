@@ -81,6 +81,7 @@ body {
       color: $blue;
 
       & * {
+        padding-left: 10px;
         color: $purple;
       }
     }
@@ -125,7 +126,7 @@ body {
     }
 
     // .form__btn
-    &__btn {
+    &__button {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -193,14 +194,12 @@ body {
 }
 
 .hr {
-  height: 10px;
   border-top: 1.5px solid $gray-300;
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
 }
 
 .tasks {
-  padding-block: 65px;
 
   .task {
     display: flex;
@@ -212,6 +211,7 @@ body {
 
       &.active {
         display: flex; ///////////////////////////////Добавить класс
+        padding-block: 65px;
         flex-direction: column;
         align-items: center;
         gap: 16px;
@@ -259,15 +259,16 @@ body {
 
   // .item__block
   &__block {
-    border: 1px solid $gray-400;
     border-radius: 8px;
     padding: 16px;
     display: flex;
+    justify-content: space-between;
     flex-wrap: nowrap;
     align-items: start;
     gap: 12px;
     box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.06);
     background: $gray-500;
+    border: 1px solid $gray-400;
   }
 
   &__checkbox {
@@ -278,6 +279,7 @@ body {
   &__text {
     font-size: 14px;
     color: $gray-100;
+    flex-grow: 1;
 
     &.done {
       ////////////////////////////////////////////////Добавить класс 
@@ -311,4 +313,8 @@ body {
   width: 16px;
   height: 16px;
   fill: $gray-100;
+}
+
+.counter {
+  color: $gray-100
 }
