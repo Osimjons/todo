@@ -1,70 +1,106 @@
 'use strict';
-/**Функция создания перменных и получения элементов из HTML */
-const getElmByHtml = (selector) => {
-  const element = document.querySelector(selector);
-  return element;
-};
 
-const form = getElmByHtml('form');
-let input = getElmByHtml('.form__input');
-const button = getElmByHtml('.form__button');
-let inputValue = input.value;
-const allTasks = getElmByHtml('.todo-counts__created-count');
-const completTasks = getElmByHtml('.todo-counts__completed');
-let text = getElmByHtml('.task__list');
-const noTaskDislay = getElmByHtml('.task__no-task');
-const doneTasks = getElmByHtml('.item__text'); //Переменная для зачеркивания задачи как завешенная
-const checkbox = getElmByHtml('.item__checkbox');
-// console.log('checkbox: ', checkbox);
 
-noTaskDislay.classList.add('active');
+  /**`Функция создания перменных и получения элементов из HTML` */
+  const getElmByHtml = (selector) => {
+    const element = document.querySelector(selector);
+    return element;
+  };
 
-form.addEventListener('submit', (event) => {
-  event.preventDefault();
-  createTask(input.value);
-  outOnDisplay(task);
-  noTaskDislay.classList.remove('active');
-  input.value = '';
-});
+  /**`Получение Формы из HTML` */
+  const form = getElmByHtml('form');
+  const input = getElmByHtml('.form__input');
+  const tasksList = getElmByHtml('.task__list');
+  // const noTaskScreen = getElmByHtml('.task__no-task');
 
-const task = [];
+  /**`Массив с объектами` */
+  let tasksListArray = [];
 
-const createTask = (value) => {
-  value = value.trim();
-  // value = value.split('').charAt(0).toUpperCase() + value.slice(1);
-  if (value === '') return;
-  task.push(value);
-  return task;
-};
-
-const outOnDisplay = (taskArr) => {
-  text.innerHTML = taskArr
-    .map((item, i) => {
-      return `
-      <li class="task__item item hr">
-        <div class="item__block">
-          <input type="checkbox" class="item__checkbox">
-          <span class = "counter">${(allTasks.textContent = i + 1)}</span>
-          <p class="item__text ">${item}</p>
-          <svg class="ico item__cart">
-            <use href="images/sprite.svg#musor_;-)"></use>
-          </svg>
-        </div>
-      </li>
-      `;
-    })
-    .join('');
-};
-
-task.forEach((task) => {
-  if (checkbox.checked === true) {
-    doneTasks.classList.add('done');
+  /**Достаем из  данные из localStorage*/
+  if (localStorage.getItem('tasksListArray')) {
+    tasksListArray = JSON.parse(localStorage.getItem('tasksListArray'));
   }
-});
+  tasksListArray.forEach((task) => renderTask(task));
+  noTaskScreen();
 
-// document.querySelectorAll('.item__checkbox').forEach((checkbox, index) => {
-//   checkbox.addEventListener('change', () => {
-//     const textEl = text.querySelectorAll('.item__text')[index];
-//     textEl.classList.toggle('done', checkbox.checked);
-//   });
-// });
+  /**`Функция добовления задач` */
+  form.addEventListener('submit', addTask);
+  /**`Функция добовления задач` */
+  tasksList.addEventListener('click', deleteTask);
+  /**`Функция выполнении задач` */
+  tasksList.addEventListener('click', chekTaskDone);
+
+  /**`Функция добовления задач` */
+  function addTask(event) {
+    event.preventDefault();
+    const taskDescription = input.value.trim();
+
+    if (!taskDescription) return;
+    const newTask = {
+      description: taskDescription,
+      done: false,
+      id: Date.now(),
+    };
+    tasksListArray.push(newTask);
+
+    renderTask(newTask);
+    input.value = '';
+    saveLocalStorage();
+    noTaskScreen();
+  }
+
+  /**`Функция удаления задач` */
+  function deleteTask(event) {
+    if (event.target.classList.contains('item__cart')) {
+      const parent = event.target.closest('.task__item');
+      const id = parent.id;
+      const index = tasksListArray.findIndex((item) => item.id === +id);
+      tasksListArray.splice(index, 1);
+      parent.remove();
+      saveLocalStorage();
+      noTaskScreen();
+    }
+  }
+
+  function chekTaskDone(event) {
+    const checkbox = getElmByHtml('.item__checkbox');
+    if (event.target.classList.contains('item__checkbox')) {
+      const parent = event.target.closest('.task__item');
+      const id = parent.id;
+      
+      const taskStatus = tasksListArray.findIndex((item) => item.id === +id);
+      tasksListArray[taskStatus].done = !tasksListArray[taskStatus].done;
+
+      saveLocalStorage();
+      parent.querySelector('.item__text').classList.toggle('done');
+    }
+  }
+
+  function noTaskScreen() {
+    const noTaskScreen = getElmByHtml('.task__no-task');
+    tasksListArray.length === 0
+      ? noTaskScreen.classList.add('active')
+      : noTaskScreen.classList.remove('active');
+  }
+  function saveLocalStorage() {
+    localStorage.setItem('tasksListArray', JSON.stringify(tasksListArray));
+  }
+
+  function renderTask(task) {
+    //Добавление и удаление класса `task__done` /
+    const addAndRemoveClass = task.done ? 'item__text done' : 'item__text';
+    const statusCheckbox =
+      addAndRemoveClass === 'item__text done' ? 'checked' : '';
+    const descriptionOnHtml = `
+          <li id="${task.id}" class="task__item item"> 
+            <div class="item__block">
+              <input type="checkbox" class="item__checkbox" ${statusCheckbox}>
+              <p class="${addAndRemoveClass}">${task.description}</p>
+              <svg class="ico item__cart">
+                <use href="images/sprite.svg#delete-icon"></use>
+              </svg>
+            </div>
+          </li>`;
+    tasksList.insertAdjacentHTML('beforeend', descriptionOnHtml);
+  }
+

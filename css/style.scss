@@ -220,7 +220,6 @@ body {
         line-height: 140%;
         text-align: center;
         color: $gray-300;
-
       }
 
       // .task__no-task-desc
@@ -273,6 +272,7 @@ body {
 
   &__checkbox {
     transform: translateY(50%);
+    cursor: pointer;
   }
 
   // .item__text
