@@ -11,11 +11,6 @@ const form = getElmByHtml('form');
 const input = getElmByHtml('.form__input');
 const tasksList = getElmByHtml('.task__list');
 
-const creasingTaskCounter = (tasks) => {
-  let createdTaskCount = getElmByHtml('.todo-counts__created-count');
-  createdTaskCount.innerText = tasks.length;
-};
-
 /**`Массив с объектами` */
 let tasksListArray = [];
 
@@ -48,8 +43,9 @@ function addTask(event) {
 
   renderTask(newTask);
   input.value = '';
-  creasingTaskCounter(tasksListArray);
+  // creatingTaskCounter(tasksListArray);
   saveLocalStorage();
+  taskOfDone(tasksListArray);
   noTaskScreen();
 }
 
@@ -61,14 +57,14 @@ function deleteTask(event) {
     const index = tasksListArray.findIndex((item) => item.id === +id);
     tasksListArray.splice(index, 1);
     parent.remove();
-    creasingTaskCounter(tasksListArray);
+    // creatingTaskCounter(tasksListArray);
     saveLocalStorage();
     noTaskScreen();
+    taskOfDone(tasksListArray);
   }
 }
 
 function chekTaskDone(event) {
-  const checkbox = getElmByHtml('.item__checkbox');
   if (event.target.classList.contains('item__checkbox')) {
     const parent = event.target.closest('.task__item');
     const id = parent.id;
@@ -78,6 +74,8 @@ function chekTaskDone(event) {
 
     saveLocalStorage();
     parent.querySelector('.item__text').classList.toggle('done');
+    // creatingTaskCounter(tasksListArray);
+    taskOfDone(tasksListArray);
   }
 }
 
@@ -87,10 +85,13 @@ function noTaskScreen() {
     ? noTaskScreen.classList.add('active')
     : noTaskScreen.classList.remove('active');
 }
+
+/**`Сохранение в LocalStorage` */
 function saveLocalStorage() {
   localStorage.setItem('tasksListArray', JSON.stringify(tasksListArray));
 }
 
+/**`Выдов на дисплей` */
 function renderTask(task) {
   //Добавление и удаление класса `task__done` /
   const addAndRemoveClass = task.done ? 'item__text done' : 'item__text';
@@ -107,5 +108,21 @@ function renderTask(task) {
             </div>
           </li>`;
   tasksList.insertAdjacentHTML('beforeend', descriptionOnHtml);
-  creasingTaskCounter(tasksListArray);
+  // creatingTaskCounter(tasksListArray);
 }
+
+/**`Вывод на дисплей общее количество и  выполненных задачь` */
+function taskOfDone(tasks) {
+  /**`Массив с завершенными заадчами` */
+  const filteredArray = [];
+  const allTasksScreen = getElmByHtml('.todo-counts__completed');
+  getElmByHtml('.todo-counts__created-count').innerText = tasks.length;
+  tasks.filter((item) =>
+    item.done === true ? filteredArray.push(item) : null
+  );
+
+  return (allTasksScreen.innerHTML = `
+        <span class="todo-counts__complet">Завершено:</span>
+        <span class="todo-counts__created-count">${filteredArray.length} из ${tasks.length}</span>`);
+}
+taskOfDone(tasksListArray);
